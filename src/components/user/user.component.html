@@ -1,29 +1,61 @@
-<p-card styleClass="user-form" class="flex justify-content-center">
-  <form [formGroup]="User" (ngSubmit)="addUser()" novalidate>
-    <div class="field">
-      <label for="firstName" class="block">First Name</label>
-      <input type="text" pInputText placeholder="First Name" formControlName="username" />
-      <small class="p-error block" *ngIf="User.controls['username']?.invalid && User.controls['username']?.dirty">
-        Username is required
-      </small>
-    </div>
-    <div class="field">
-      <label for="lastName" class="block">Last Name</label>
-      <input type="text" pInputText placeholder="Last Name" formControlName="email" />
-    </div>
-
-      <div class="field">
-        <label for="passwordHash" class="block">passwordHash</label>
-        <input type="text" pInputText placeholder="passwordHash" formControlName="passwordHash" />
-      </div>
-      <div class="field">
-        <label for="role" class="block">role</label>
-        <input type="text" pInputText placeholder="role" formControlName="role" />
-        <small class="p-error block" *ngIf="User.controls['role']?.invalid && User.controls['role']?.dirty">
-          Role is required
+<header >
+  <button pButton type="button" label="{{ buttonText }}" (click)="toggleForm()"></button>
+  <p-messages></p-messages>
+</header>
+<div class="addForm">
+  <p-card styleClass="user-form" *ngIf="showForm"  >
+    <form [formGroup]="User" (ngSubmit)="addUser()" novalidate>
+      <div class="field" style="width: 400px;">
+        <label for="firstName" class="block">First Name</label>
+        <input type="text" pInputText placeholder="First Name" formControlName="username" />
+        <small class="p-error block" *ngIf="User.controls['username']?.invalid && User.controls['username']?.dirty">
+          Username is required
         </small>
       </div>
-    
-    <button pButton type="submit" label="Submit" [disabled]="User.invalid"></button>
-  </form>
-</p-card>
+      <div class="field">
+        <label for="lastName" class="block">Last Name</label>
+        <input type="text" pInputText placeholder="Last Name" formControlName="email" />
+      </div>
+  
+        <div class="field">
+          <label for="passwordHash" class="block">passwordHash</label>
+          <input type="text" pInputText placeholder="passwordHash" formControlName="passwordHash" />
+        </div>
+        <div class="field">
+          <label for="role" class="block">role</label>
+          <input type="text" pInputText placeholder="role" formControlName="role" />
+          <small class="p-error block" *ngIf="User.controls['role']?.invalid && User.controls['role']?.dirty">
+            Role is required
+          </small>
+        </div>
+      
+      <button pButton type="submit" label="Submit" [disabled]="User.invalid"></button>
+    </form>
+  </p-card>
+  <div class="table-container">
+    <p-table [value]="Users" styleClass="p-datatable-gridlines" [tableStyle]="{'min-width': '50rem'}">
+      <ng-template pTemplate="caption">
+          Users
+      </ng-template>
+      <ng-template pTemplate="header">
+          <tr>
+              <th>Id</th>
+              <th>UserName</th>
+              <th>Email</th>
+              <th>Password</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-user>
+        <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
+        </tr>
+      </ng-template>      
+     
+  </p-table>
+  </div>
+</div>
+
+
