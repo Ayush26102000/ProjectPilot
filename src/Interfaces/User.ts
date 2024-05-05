@@ -1,5 +1,5 @@
 export interface User {
-   userId :number;
+  user_id :number;
     username: string;
     email: string;
     passwordHash: string;
