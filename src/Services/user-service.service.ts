@@ -16,6 +16,16 @@ export class UserServiceService {
     return this.http.post<any>(this.apiUrl + "AddUser", userData);
   }
 
+  EditUser(userData: User): Observable<any> {
+    console.log("Update user service : " + userData.username);
+    return this.http.post<any>(this.apiUrl + "UpdateUser", userData);
+  }
+
+  deleteUser(userData: User): Observable<any> {
+    console.log(userData);
+    return this.http.post<any>(this.apiUrl + "DeleteUser", userData);
+  }
+
   GetUsers(): Observable<any> {
     return this.http.get<any>(this.apiUrl );
   }

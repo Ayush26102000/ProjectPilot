@@ -27,9 +27,10 @@ export class UserComponent {
   showForm: boolean = false; 
   buttonText: string = 'Add User';
   User: FormGroup;
+  editUserForm: FormGroup; // Add editUserForm
   messages: Message[] | undefined;
   Users : User [] = [];
-
+  editingUser: User | null = null; // Add editingUser variable
 
   constructor(private fb: FormBuilder,private userService: UserServiceService,private messageService: MessageService) {
     this.User = this.fb.group({
@@ -38,6 +39,13 @@ export class UserComponent {
       passwordHash: ['', Validators.required],
       role: ['', Validators.required]
     });
+
+       this.editUserForm = this.fb.group({
+        editUsername: ['', Validators.required],
+        editEmail: ['', Validators.required],
+        editPasswordHash: ['', Validators.required],
+        editRole: ['', Validators.required]
+      });
   }
 
 
@@ -73,6 +81,70 @@ export class UserComponent {
       }
     });
   }
+
+  deleteUser(user: User) {
+    this.userService.deleteUser(user).subscribe({
+      next: (response) => {
+        if(response){
+
+          this.GetUsers();
+          this.messageService.add({severity:'success', summary:'User deleted successfully', detail:''});
+        }
+        else{
+          this.messageService.add({severity:'error', summary:'Error while deleting User', detail:''});
+        }
+      },
+      error: (error) => {
+        this.messageService.add({severity:'error', summary:'Error while deleting User', detail:''});
+      }
+    });
+  }
+  
+  editUser(user: User) {
+    this.editingUser = user;
+    this.editUserForm.patchValue({
+      editUsername: user.username,
+      editEmail: user.email,
+      editPasswordHash: user.passwordHash,
+      editRole: user.role
+    });
+  }
+
+
+  updateUser() {
+    
+
+    if (this.editUserForm.valid && this.editingUser) {
+      const updatedUserData: User = {
+        username: this.editingUser.username, 
+        ...this.editUserForm.value
+      };
+      
+      console.log("Update user ts : " + updatedUserData)
+      this.userService.EditUser(updatedUserData).subscribe({
+        next: (response) => {
+          if(response){
+            this.GetUsers();
+            this.messageService.add({severity:'success', summary:'User updated successfully', detail:''});
+            this.editUserForm.reset();
+            this.editingUser = null;
+          }
+          else{
+            this.messageService.add({severity:'error', summary:'Error while updating User', detail:''});
+          }
+        },
+        error: (error) => {
+          this.messageService.add({severity:'error', summary:'Error while updating User', detail:''});
+        }
+      });
+    }
+  }
+  
+  cancelEdit() {
+    this.editUserForm.reset();
+    this.editingUser = null;
+  }
+  
 
   toggleForm() {
     this.showForm = !this.showForm;

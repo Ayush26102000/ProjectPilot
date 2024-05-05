@@ -66,3 +66,12 @@ button:hover {
 .table-container {
   width: 100%;
 }
+
+.editForm{
+    width: 400px;
+}
+
+
+.updatebtn{
+  margin-right: 1rem;
+}

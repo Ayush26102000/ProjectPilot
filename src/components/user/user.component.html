@@ -32,6 +32,36 @@
       <button pButton type="submit" label="Submit" [disabled]="User.invalid"></button>
     </form>
   </p-card>
+  <div class="editForm" *ngIf="editingUser">
+    <p-card styleClass="user-form">
+      <form [formGroup]="editUserForm" (ngSubmit)="updateUser()" novalidate>
+        <div class="field">
+          <label for="editFirstName" class="block">First Name</label>
+          <input type="text" pInputText placeholder="First Name" formControlName="editUsername" />
+          <small class="p-error block" *ngIf="editUserForm.controls['editUsername']?.invalid && editUserForm.controls['editUsername']?.dirty">
+            Username is required
+          </small>
+        </div>
+        <div class="field">
+          <label for="editLastName" class="block">Last Name</label>
+          <input type="text" pInputText placeholder="Last Name" formControlName="editEmail" />
+        </div>
+        <div class="field">
+          <label for="editPasswordHash" class="block">Password</label>
+          <input type="text" pInputText placeholder="Password" formControlName="editPasswordHash" />
+        </div>
+        <div class="field">
+          <label for="editRole" class="block">Role</label>
+          <input type="text" pInputText placeholder="Role" formControlName="editRole" />
+          <small class="p-error block" *ngIf="editUserForm.controls['editRole']?.invalid && editUserForm.controls['editRole']?.dirty">
+            Role is required
+          </small>
+        </div>
+        <button class="updatebtn" pButton type="submit" label="Update" [disabled]="editUserForm.invalid"></button>
+        <button pButton type="button" label="Cancel" (click)="cancelEdit()"></button>
+      </form>
+    </p-card>
+  </div>
   <div class="table-container">
     <p-table [value]="Users" styleClass="p-datatable-gridlines" [tableStyle]="{'min-width': '50rem'}">
       <ng-template pTemplate="caption">
@@ -43,19 +73,25 @@
               <th>UserName</th>
               <th>Email</th>
               <th>Password</th>
+              <th>Edit</th>
+              <th>Delete</th>
           </tr>
       </ng-template>
       <ng-template pTemplate="body" let-user>
         <tr>
           <td>{{ user.id }}</td>
-          <td>{{ user.username }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.role }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
+        <td> <button (click)="editUser(user)">Edit</button> </td>
+        <td> <button (click)="deleteUser(user)">Delete</button> </td>
         </tr>
       </ng-template>      
      
   </p-table>
   </div>
+  
+  
 </div>
 
 
