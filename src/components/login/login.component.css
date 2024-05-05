@@ -1,0 +1,45 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 85%;
+}
+
+header{
+  height: 13%;
+}
+
+.mainComponent{
+  height: 95vh;
+}
+
+:host ::ng-deep .login-form {
+  width: 600px; 
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.336);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+.login-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.field {
+  margin-bottom: 20px;
+}
+
+.block {
+  display: block;
+  margin-bottom: 5px;
+}
+
+button{
+  cursor: pointer;
+}

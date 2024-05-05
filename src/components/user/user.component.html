@@ -45,14 +45,10 @@
           <input type="text" pInputText formControlName="editEmail" />
         </div>
         <div class="field">
-          <label for="editPasswordHash" class="block">Password</label>
-          <input type="text" pInputText formControlName="editPasswordHash" />
-        </div>
-        <div class="field">
           <label for="editRole" class="block">Role</label>
           <input type="text" pInputText formControlName="editRole" />
         </div>
-        <button pButton type="submit" label="Update" [disabled]="editUserForm.invalid"></button>
+        <button pButton type="submit" label="Update" ></button>
         <button pButton type="button" label="Cancel" (click)="cancelEdit()"></button>
       </form>
     </p-card>
@@ -68,7 +64,7 @@
               <th>Id</th>
               <th>UserName</th>
               <th>Email</th>
-              <th>Password</th>
+              <th>Role</th>
               <th>Edit</th>
               <th>Delete</th>
           </tr>

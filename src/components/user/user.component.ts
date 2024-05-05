@@ -95,13 +95,12 @@ export class UserComponent {
     this.editUserForm.patchValue({
       editUsername: user.username,
       editEmail: user.email,
-      editPasswordHash: user.passwordHash,
       editRole: user.role
     });
   }
 
   updateUser() {
-    if (this.editUserForm.valid && this.editingUser) {
+    if (this.editingUser) {
       const updatedUserData: User = {
         username: this.editUserForm.get('editUsername')?.value,
         email: this.editUserForm.get('editEmail')?.value,

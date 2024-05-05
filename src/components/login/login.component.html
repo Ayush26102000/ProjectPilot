@@ -1,5 +1,22 @@
-<div class="card flex justify-content-center">
-    <p-button label="Users Page" icon="pi pi-check" routerLink="/Users"></p-button>
+
+<div class="mainComponent">
+  <header >
+    <p-messages></p-messages>
+  </header>
+  <div class="login-container">
+    <p-card styleClass="login-form">
+      <h2 class="login-title">Task Management System</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+        <div class="field">
+          <label for="username" class="block">Username</label>
+          <input type="text" pInputText placeholder="Enter your username" formControlName="username" />
+        </div>
+        <div class="field">
+          <label for="password" class="block">Password</label>
+          <input type="password" pInputText placeholder="Enter your password" formControlName="password" />
+        </div>
+        <button pButton type="submit" label="Login" [disabled]="loginForm.invalid"></button>
+      </form>
+    </p-card>
+  </div>
 </div>
-
-
