@@ -59,6 +59,7 @@ export class UserComponent {
       next: () => {
         this.messageService.add({ severity: 'success', summary: 'User added successfully' });
         this.resetForm();
+        this.getUsers();
       },
       error: () => {
         this.messageService.add({ severity: 'error', summary: 'Error while adding User' });

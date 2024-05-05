@@ -44,12 +44,19 @@ export class LoginComponent implements OnInit {
       const username = this.loginForm.get('username')?.value;
       const password = this.loginForm.get('password')?.value;
 
-      const encryptedPassword = this.authService.encryptPassword(password);
+     // const encryptedPassword = this.authService.encryptPassword(password);
 
-      this.authService.login(username, encryptedPassword).subscribe({
+      this.authService.login(username, password).subscribe({
         next: (response) => {
           if(response){
-            this.router.navigate(['/Users']);
+            if(username == "admin"){
+              this.router.navigate(['/AdminDashboard']);
+            }else if(username == "manager"){
+              this.router.navigate(['/ManagerDashboard']);
+            }else{
+              this.router.navigate(['/TeamMemberDashboard']);
+            }
+         
           }
           else{
             this.messageService.add({ severity: 'error', summary: 'OMG ! Check your username password again' });
