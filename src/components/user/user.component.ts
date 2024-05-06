@@ -7,6 +7,7 @@ import { CardModule } from 'primeng/card';
 import { FormBuilder, Validators } from '@angular/forms';
 import { UserServiceService } from '../../Services/user-service.service';
 import { User } from '../../Interfaces/User';
+import { Role } from '../../Interfaces/Role';
 import { Message, MessageService } from 'primeng/api';
 import {MessagesModule } from 'primeng/messages'
 import { TableModule } from 'primeng/table';
@@ -27,6 +28,7 @@ export class UserComponent {
   User: FormGroup;
   editUserForm: FormGroup;
   Users: User[] = [];
+  Roles: Role[] = [];
   editingUser: User | null = null;
 
   constructor(
@@ -51,6 +53,7 @@ export class UserComponent {
 
   ngOnInit() {
     this.getUsers();
+    this.getroles();
   }
 
   addUser() {
@@ -72,6 +75,18 @@ export class UserComponent {
     this.userService.GetUsers().subscribe({
       next: (response) => {
         this.Users = response;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
+  getroles(){
+    this.userService.GetRoles().subscribe({
+      next: (response) => {
+        this.Roles = response;
+        console.log(response);
       },
       error: (error) => {
         console.error(error);

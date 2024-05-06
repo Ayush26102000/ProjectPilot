@@ -24,6 +24,22 @@ header {
   margin: 20px;
 }
 
+select {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+select:focus {
+  outline: none;
+}
+
+select option {
+  padding: 8px;
+}
+
 .field {
   margin-bottom: 20px;
 }

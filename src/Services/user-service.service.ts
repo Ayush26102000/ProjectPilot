@@ -29,6 +29,10 @@ export class UserServiceService {
   GetUsers(): Observable<any> {
     return this.http.get<any>(this.apiUrl );
   }
+  
+  GetRoles(): Observable<any> {
+    return this.http.get<any>(this.apiUrl + "GetRoles");
+  }
 
   
 }

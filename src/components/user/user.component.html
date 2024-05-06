@@ -22,12 +22,15 @@
           <input type="text" pInputText placeholder="passwordHash" formControlName="passwordHash" />
         </div>
         <div class="field">
-          <label for="role" class="block">role</label>
-          <input type="text" pInputText placeholder="role" formControlName="role" />
+          <label for="role" class="block">Role</label>
+          <select formControlName="role" class="form-control">
+            <option value="">Select Role</option>
+            <option *ngFor="let role of Roles" [value]="role.role_id">{{ role.role_name }}</option>
+          </select>
           <small class="p-error block" *ngIf="User.controls['role']?.invalid && User.controls['role']?.dirty">
             Role is required
           </small>
-        </div>
+        </div>        
       
       <button pButton type="submit" label="Submit" [disabled]="User.invalid"></button>
     </form>
