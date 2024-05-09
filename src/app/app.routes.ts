@@ -4,6 +4,8 @@ import { LoginComponent } from '../components/login/login.component';
 import { AdminDashboardComponent } from '../components/admin-dashboard/admin-dashboard.component';
 import { ManagerDashboardComponent } from '../components/manager-dashboard/manager-dashboard.component';
 import { TeamMemberDashboardComponent } from '../components/team-member-dashboard/team-member-dashboard.component';
+import { TasksComponent } from '../components/tasks/tasks.component';
+import { ProjectsComponent } from '../components/projects/projects.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/LogInPage', pathMatch: 'full' }, 
@@ -12,4 +14,7 @@ export const routes: Routes = [
     { path: 'AdminDashboard', component: AdminDashboardComponent } ,
     { path: 'ManagerDashboard', component: ManagerDashboardComponent } ,
     { path: 'TeamMemberDashboard', component: TeamMemberDashboardComponent } ,
+    { path: 'Tasks', component: TasksComponent } ,
+    { path: 'Projects', component: ProjectsComponent } ,
+
 ]
