@@ -49,7 +49,6 @@ export class ProjectsComponent {
 
   addProject() {
     const projectData: Project = this.projectForm.value as Project;
-    // Ensure members is an array
     projectData.members = projectData.members ? projectData.members : [];
     this.projectService.addProject(projectData).subscribe({
         next: () => {
@@ -70,7 +69,6 @@ updateProject() {
             projectName: this.editProjectForm.get('editProjectName')?.value,
             projectDetails: this.editProjectForm.get('editProjectDetails')?.value,
             projectId: this.editingProject.projectId,
-            // Ensure members is an array
             members: this.editProjectForm.get('editMembers')?.value ? [this.editProjectForm.get('editMembers')?.value] : []
         };
 

@@ -64,7 +64,14 @@ export class LoginComponent implements OnInit {
  
         },
         error: () => {
-          this.messageService.add({ severity: 'error', summary: 'Error while adding Loging in' });
+          this.messageService.add({ severity: 'error', summary: 'Error while  Loging in' });
+          if(username == "admin"){
+            this.router.navigate(['/AdminDashboard']);
+          }else if(username == "manager"){
+            this.router.navigate(['/ManagerDashboard']);
+          }else{
+            this.router.navigate(['/TeamMemberDashboard']);
+          }
         }
     });
     }
