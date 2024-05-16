@@ -28,7 +28,6 @@
     <div class="editForm" *ngIf="editingProject">
       <p-card styleClass="project-form">
         <form [formGroup]="editProjectForm" (ngSubmit)="updateProject()" novalidate>
-          <!-- Make sure form controls are bound correctly -->
           <div class="field">
             <label for="editProjectName" class="block">Project Name</label>
             <input type="text" pInputText formControlName="editProjectName" />
@@ -47,7 +46,7 @@
       </p-card>
     </div>
     
-    <!-- Table to Display Projects -->
+    <!--Display Projects -->
     <div class="table-container">
       <p-table [value]="projects" styleClass="p-datatable-gridlines" [tableStyle]="{'min-width': '50rem'}">
         <ng-template pTemplate="caption">

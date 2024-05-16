@@ -38,7 +38,6 @@
   <div class="editForm" *ngIf="editingUser">
     <p-card styleClass="user-form">
       <form [formGroup]="editUserForm" (ngSubmit)="updateUser()" novalidate>
-        <!-- Make sure form controls are bound correctly -->
         <div class="field">
           <label for="editUsername" class="block">Username</label>
           <input type="text" pInputText formControlName="editUsername" />

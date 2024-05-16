@@ -1,1 +1,86 @@
-<p>tasks works!</p>
+<header>
+    <button pButton type="button" label="{{ buttonText }}" (click)="toggleForm()"></button>
+    <p-messages></p-messages>
+  </header>
+  
+  <div class="addForm">
+    <p-card styleClass="task-form" *ngIf="showForm">
+      <form [formGroup]="Task" (ngSubmit)="addTask()" novalidate>
+        <div class="field" style="width: 400px;">
+          <label for="taskName" class="block">Task Name</label>
+          <input type="text" pInputText placeholder="Task Name" formControlName="taskName" />
+          <small class="p-error block" *ngIf="Task.controls['taskName']?.invalid && Task.controls['taskName']?.dirty">
+            Task Name is required
+          </small>
+        </div>
+        <div class="field">
+          <label for="taskID" class="block">Task ID</label>
+          <input type="text" pInputText placeholder="Task ID" formControlName="taskID" />
+        </div>
+        <div class="field">
+          <label for="taskDescription" class="block">Task Description</label>
+          <input type="text" pInputText placeholder="Task Description" formControlName="taskDescription" />
+        </div>
+        <div class="field">
+          <label for="taskType" class="block">Task Type</label>
+          <input type="text" pInputText placeholder="Task Type" formControlName="taskType" />
+        </div>
+        <div class="field">
+          <label for="status" class="block">Status</label>
+          <input type="text" pInputText placeholder="Status" formControlName="status" />
+        </div>
+        <div class="field">
+          <label for="projectName" class="block">Project Name</label>
+          <input type="text" pInputText placeholder="Project Name" formControlName="projectName" />
+        </div>
+        <div class="field">
+          <label for="startDate" class="block">Start Date</label>
+          <input type="text" pInputText placeholder="Start Date" formControlName="startDate" />
+        </div>
+        <div class="field">
+          <label for="dueDate" class="block">Due Date</label>
+          <input type="text" pInputText placeholder="Due Date" formControlName="dueDate" />
+        </div>
+        <button pButton type="submit" label="Submit" [disabled]="Task.invalid"></button>
+      </form>
+    </p-card>
+  
+    <div class="table-container">
+      <p-table [value]="Tasks" styleClass="p-datatable-gridlines" >
+        <ng-template pTemplate="caption">
+            Tasks
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Task ID</th>
+                <th>Task Name</th>
+                <th>Task Description</th>
+                <th>Task Type</th>
+                <th>Status</th>
+                <th>Project Name</th>
+                <th>Start Date</th>
+                <th>Due Date</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-task>
+          <tr>
+            <td>{{ task.taskID }}</td>
+            <td>{{ task.taskName }}</td>
+            <td>{{ task.taskDescription }}</td>
+            <td>{{ task.taskType }}</td>
+            <td>{{ task.status }}</td>
+            <td>{{ task.projectName }}</td>
+            <td>{{ task.startDate }}</td>
+            <td>{{ task.dueDate }}</td>
+            <td><button (click)="editTask(task)">Edit</button></td>
+            <td><button (click)="deleteTask(task)">Delete</button></td>
+          </tr>
+        </ng-template>    
+        <!-- <p-column field="status" header="Status"></p-column>
+        <p-column field="projectName" header="Project Name" ></p-column>   -->
+      </p-table>
+    </div>
+  </div>
+  

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component ,  CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms'; 
@@ -8,9 +8,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { UserServiceService } from '../../Services/user-service.service';
 import { User } from '../../Interfaces/User';
 import { Role } from '../../Interfaces/Role';
-import { Message, MessageService } from 'primeng/api';
+import {  MessageService } from 'primeng/api';
 import {MessagesModule } from 'primeng/messages'
 import { TableModule } from 'primeng/table';
+
 
 
 @Component({
@@ -19,7 +20,10 @@ import { TableModule } from 'primeng/table';
   imports: [ButtonModule ,ReactiveFormsModule,InputTextModule,CardModule,CommonModule,MessagesModule,TableModule],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css',
-  providers: [MessageService, ]
+  providers: [MessageService, ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
 
 export class UserComponent {
