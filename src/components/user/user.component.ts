@@ -58,6 +58,10 @@ export class UserComponent {
 
   addUser() {
     const userData: User = this.User.value as User;
+    if(userData.role == "1") {
+      
+    }
+    console.log(userData.role);
     this.userService.addUser(userData).subscribe({
       next: () => {
         this.messageService.add({ severity: 'success', summary: 'User added successfully' });
