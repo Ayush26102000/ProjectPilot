@@ -13,6 +13,7 @@ export class UserServiceService {
   constructor(private http: HttpClient) { }
 
   addUser(userData: User): Observable<any> {
+    console.log(userData);
     return this.http.post<any>(this.apiUrl + "AddUser", userData);
   }
 
