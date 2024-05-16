@@ -44,7 +44,7 @@ export class UserComponent {
       username: ['', Validators.required],
       email: ['', Validators.required],
       passwordHash: ['', Validators.required],
-      role: ['', Validators.required]
+      role_Name: ['', Validators.required]
     });
 
     this.editUserForm = this.fb.group({
@@ -78,6 +78,7 @@ export class UserComponent {
   getUsers() {
     this.userService.GetUsers().subscribe({
       next: (response) => {
+        console.log(response);
         this.Users = response;
       },
       error: (error) => {
@@ -115,7 +116,7 @@ export class UserComponent {
     this.editUserForm.patchValue({
       editUsername: user.username,
       editEmail: user.email,
-      editRole: user.role
+      editRole: user.role_Name
     });
   }
 
@@ -125,7 +126,7 @@ export class UserComponent {
         username: this.editUserForm.get('editUsername')?.value,
         email: this.editUserForm.get('editEmail')?.value,
         passwordHash: this.editUserForm.get('editPasswordHash')?.value,
-        role: this.editUserForm.get('editRole')?.value,
+        role_Name: this.editUserForm.get('editRole')?.value,
         user_id: this.editingUser.user_id
       };
 

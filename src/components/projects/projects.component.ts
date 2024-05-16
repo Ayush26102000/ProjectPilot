@@ -1,20 +1,25 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms'; 
+import { ReactiveFormsModule } from '@angular/forms'; 
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 import { Project } from '../../Interfaces/Projects';
 import {  MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { TableModule } from 'primeng/table';
 import { ProjectService } from '../../Services/project.service';
+import { UserServiceService } from '../../Services/user-service.service';
+import { User } from '../../Interfaces/User';
+import { FormsModule } from '@angular/forms';
+import { CheckboxModule } from 'primeng/checkbox';
+
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [ButtonModule, ReactiveFormsModule, InputTextModule, CardModule, CommonModule, MessagesModule, TableModule],
+  imports: [ButtonModule, ReactiveFormsModule, InputTextModule, CardModule, CommonModule, MessagesModule, TableModule,FormsModule,CheckboxModule ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.css',
   providers: [MessageService]
@@ -26,25 +31,36 @@ export class ProjectsComponent {
   editProjectForm: FormGroup;
   projects: Project[] = [];
   editingProject: Project | null = null;
+  searchQuery: string = '';
+  showMembers: boolean = false;
+  members: User[] = [];
+  selectedMembers: { [key: string]: FormControl } = {};
+  showMemberSection: boolean = false;
+  
 
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
-    private projectService: ProjectService // Change variable name to lowercase
+    private projectService: ProjectService ,
+    private userService : UserServiceService
   ) {
     this.projectForm = this.fb.group({
       projectName: ['', Validators.required],
+      members: [''],
       projectDetails: ['']
     });
 
     this.editProjectForm = this.fb.group({
       editProjectName: ['', Validators.required],
-      editProjectDetails: ['']
+      editProjectDetails: [''],
+      editMembers: [''] 
     });
+    
   }
 
   ngOnInit() {
     this.getProjects();
+    this.getallteammembers();
   }
 
   addProject() {
@@ -61,6 +77,17 @@ export class ProjectsComponent {
             this.resetForm();
         }
     });
+}
+
+get filteredMembers(): string[] {
+  return this.members
+    .filter(member => member.username.toLowerCase().includes(this.searchQuery.toLowerCase()))
+    .map(member => member.username);
+}
+
+
+filterMembers() {
+  this.showMembers = this.searchQuery.length > 0;
 }
 
 updateProject() {
@@ -119,11 +146,28 @@ updateProject() {
     });
   }
 
-  
+  getallteammembers(){
+    this.projectService.getallteammembers().subscribe({
+        next: (response) => {
+            this.members = response;
+        },
+        error: (error) => {
+            console.error(error);
+        }
+    });
+}
+
+
+
 
   cancelEdit() {
     this.editProjectForm.reset();
     this.editingProject = null;
+  }
+
+  
+  toggleMemberSection() {
+    this.showMemberSection = !this.showMemberSection;
   }
 
   toggleForm() {
