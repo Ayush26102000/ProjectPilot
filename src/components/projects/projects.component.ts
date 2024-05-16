@@ -10,7 +10,6 @@ import {  MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { TableModule } from 'primeng/table';
 import { ProjectService } from '../../Services/project.service';
-import { UserServiceService } from '../../Services/user-service.service';
 import { User } from '../../Interfaces/User';
 import { FormsModule } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -24,6 +23,8 @@ import { CheckboxModule } from 'primeng/checkbox';
   styleUrl: './projects.component.css',
   providers: [MessageService]
 })
+
+
 export class ProjectsComponent {
   showForm: boolean = false;
   buttonText: string = 'Add Project';
@@ -34,28 +35,25 @@ export class ProjectsComponent {
   searchQuery: string = '';
   showMembers: boolean = false;
   members: User[] = [];
-  selectedMembers: { [key: string]: FormControl } = {};
   showMemberSection: boolean = false;
   
 
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
-    private projectService: ProjectService ,
-    private userService : UserServiceService
+    private projectService: ProjectService 
   ) {
     this.projectForm = this.fb.group({
       projectName: ['', Validators.required],
-      members: [''],
-      projectDetails: ['']
+      projectDetails: [''],
+      projectmembers: [[]]
     });
 
     this.editProjectForm = this.fb.group({
       editProjectName: ['', Validators.required],
-      editProjectDetails: [''],
-      editMembers: [''] 
+      editMembers: [''] ,
+      projectmembers: [[]]
     });
-    
   }
 
   ngOnInit() {
@@ -64,8 +62,11 @@ export class ProjectsComponent {
   }
 
   addProject() {
-    const projectData: Project = this.projectForm.value as Project;
-    projectData.members = projectData.members ? projectData.members : [];
+
+    const projectData: Project = {
+      ...this.projectForm.value, 
+      projectmembers: this.getSelectedMembers() 
+  };
     this.projectService.addProject(projectData).subscribe({
         next: () => {
             this.messageService.add({ severity: 'success', summary: 'Project added successfully' });
@@ -79,10 +80,8 @@ export class ProjectsComponent {
     });
 }
 
-get filteredMembers(): string[] {
-  return this.members
-    .filter(member => member.username.toLowerCase().includes(this.searchQuery.toLowerCase()))
-    .map(member => member.username);
+getSelectedMembers(): string[] {
+  return this.members.map(member => member.username);
 }
 
 
@@ -95,11 +94,9 @@ updateProject() {
         const updatedProjectData: Project = {
             projectName: this.editProjectForm.get('editProjectName')?.value,
             projectDetails: this.editProjectForm.get('editProjectDetails')?.value,
-            projectId: this.editingProject.projectId,
-            members: this.editProjectForm.get('editMembers')?.value ? [this.editProjectForm.get('editMembers')?.value] : []
+            projectmembers: this.getSelectedMembers() ,
+            projectId: this.editingProject.projectId
         };
-
-        updatedProjectData.members = updatedProjectData.members ? updatedProjectData.members : [];
         this.projectService.updateProject(updatedProjectData).subscribe({
             next: () => {
                 this.getProjects();
@@ -156,9 +153,6 @@ updateProject() {
         }
     });
 }
-
-
-
 
   cancelEdit() {
     this.editProjectForm.reset();
