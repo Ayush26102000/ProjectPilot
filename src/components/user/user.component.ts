@@ -44,7 +44,7 @@ export class UserComponent {
       username: ['', Validators.required],
       email: ['', Validators.required],
       passwordHash: ['', Validators.required],
-      role_Name: ['', Validators.required]
+      role: ['', Validators.required]
     });
 
     this.editUserForm = this.fb.group({
