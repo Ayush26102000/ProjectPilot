@@ -27,13 +27,12 @@ export class ProjectService {
   }
 
   updateProject(project: Project): Observable<Project> {
-    const url = `${this.apiUrl}/${project.projectId}`;
-    return this.http.put<Project>(url, project);
+   
+    return this.http.put<Project>(this.apiUrl + "UpdateProject", project);
   }
 
   deleteProject(project: Project): Observable<Project> {
-    const url = `${this.apiUrl}/${project.projectId}`;
-    return this.http.delete<Project>(url);
+    return this.http.post<Project>(this.apiUrl + "DeleteProject", project);
   }
 
   
