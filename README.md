@@ -1,8 +1,8 @@
-# Task Management System 🚀
+# Project Pilot 🌟
 
-Welcome to the Task Management System repository! This project aims to streamline project and task management processes by providing a robust platform for managers to organize projects, assign tasks to teams and individuals, and efficiently track progress.
+Welcome to the Project Pilot repository! This project aims to streamline project and task management processes by providing a robust platform for managers to organize projects, assign tasks to teams and individuals, and efficiently track progress.
 
-## Features 📋
+## Features 🚀
 
 - **Project Management**: Create and manage projects with detailed descriptions, start and end dates, and status tracking.
 
@@ -12,6 +12,6 @@ Welcome to the Task Management System repository! This project aims to streamlin
 
 - **Dashboard**: Visualize project and task statuses through intuitive dashboards, providing managers with a clear overview of progress and bottlenecks.
 
+## Contributing 🤝
 
-Contributing 🤝
 Contributions are welcome! If you'd like to contribute to this project, please fork the repository and create a pull request with your proposed changes. For major enhancements, please open an issue first to discuss what you would like to change.
