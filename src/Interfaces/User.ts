@@ -1,8 +1,14 @@
 export interface User {
-  user_id :number;
+  userId: number;
     username: string;
     email: string;
     passwordHash: string;
-    role: string;
+    firstName: string;
+    lastName: string;
+    profilePictureUrl: string;
+    status: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    projectId: number | null; // Foreign key (nullable)
+    roleId: number; 
   }
-  

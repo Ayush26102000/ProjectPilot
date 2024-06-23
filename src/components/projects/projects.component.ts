@@ -49,7 +49,7 @@ export class ProjectsComponent {
 
   addProject() {
     const projectData: Project = this.projectForm.value as Project;
-    projectData.members = projectData.members ? projectData.members : [];
+    //projectData.members = projectData.members ? projectData.members : [];
     this.projectService.addProject(projectData).subscribe({
         next: () => {
             this.messageService.add({ severity: 'success', summary: 'Project added successfully' });
@@ -66,13 +66,18 @@ export class ProjectsComponent {
 updateProject() {
     if (this.editingProject) {
         const updatedProjectData: Project = {
-            projectName: this.editProjectForm.get('editProjectName')?.value,
-            projectDetails: this.editProjectForm.get('editProjectDetails')?.value,
-            projectId: this.editingProject.projectId,
-            members: this.editProjectForm.get('editMembers')?.value ? [this.editProjectForm.get('editMembers')?.value] : []
+          projectName: this.editProjectForm.get('editProjectName')?.value,
+          description: this.editProjectForm.get('editProjectDetails')?.value,
+          projectId: this.editingProject.projectId,
+          startDate: new Date(),
+          endDate: null,
+          status: 0,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          taskId: 0
         };
 
-        updatedProjectData.members = updatedProjectData.members ? updatedProjectData.members : [];
+       // updatedProjectData.members = updatedProjectData.members ? updatedProjectData.members : [];
         this.projectService.updateProject(updatedProjectData).subscribe({
             next: () => {
                 this.getProjects();
@@ -115,7 +120,7 @@ updateProject() {
     this.editingProject = project;
     this.editProjectForm.patchValue({
       editProjectName: project.projectName,
-      editProjectDetails: project.projectDetails
+      editProjectDetails: project.description
     });
   }
 

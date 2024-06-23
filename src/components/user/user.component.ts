@@ -62,10 +62,9 @@ export class UserComponent {
 
   addUser() {
     const userData: User = this.User.value as User;
-    if(userData.role == "1") {
+    if(userData.roleId == 1) {
       
     }
-    console.log(userData.role);
     this.userService.addUser(userData).subscribe({
       next: () => {
         this.messageService.add({ severity: 'success', summary: 'User added successfully' });
@@ -119,7 +118,7 @@ export class UserComponent {
     this.editUserForm.patchValue({
       editUsername: user.username,
       editEmail: user.email,
-      editRole: user.role
+      editRole: user.roleId
     });
   }
 
@@ -129,8 +128,15 @@ export class UserComponent {
         username: this.editUserForm.get('editUsername')?.value,
         email: this.editUserForm.get('editEmail')?.value,
         passwordHash: this.editUserForm.get('editPasswordHash')?.value,
-        role: this.editUserForm.get('editRole')?.value,
-        user_id: this.editingUser.user_id
+        roleId: this.editUserForm.get('editRole')?.value,
+        userId: this.editingUser.userId,
+        firstName: '',
+        lastName: '',
+        profilePictureUrl: '',
+        status: false,
+        createdAt: new Date(), 
+        updatedAt: new Date(), 
+        projectId: null
       };
 
       this.userService.EditUser(updatedUserData).subscribe({

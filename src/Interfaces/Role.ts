@@ -1,5 +1,8 @@
 export interface Role {
-    role_id : number;
-    role_name : string;
+    roleId: number;
+    roleName: string;
+    description: string;
+    createdAt: Date;
+    updatedAt: Date;
     }
     
