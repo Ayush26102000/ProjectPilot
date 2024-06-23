@@ -92,3 +92,48 @@ header {
   .updatebtn{
     margin-right: 1rem;
   }
+
+  .members-list {
+    display: none;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.members-list.active {
+    display: block;
+}
+
+
+.panel {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 10px 0;
+  background-color: #fff;
+}
+
+.panel-header {
+  background-color: #f0f0f0;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-header h3 {
+  margin: 0;
+}
+
+.panel-content {
+  padding: 10px;
+}
+
+.close-button {
+
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.checkbox-with-margin {
+  margin-bottom: 10px; /* Adjust margin as needed */
+}

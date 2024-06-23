@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Project } from '../Interfaces/Projects';
+import { User } from '../Interfaces/User';
 
 @Injectable({
   providedIn: 'root'
@@ -17,17 +18,22 @@ export class ProjectService {
     return this.http.get<Project[]>(this.apiUrl);
   }
 
+  getallteammembers(): Observable<User[]> {
+    return this.http.get<User[]>(this.apiUrl + 'GetAllTeamMembers');
+  }
+
   addProject(project: Project): Observable<Project> {
-    return this.http.post<Project>(this.apiUrl, project);
+    return this.http.post<Project>(this.apiUrl + "AddProject", project);
   }
 
   updateProject(project: Project): Observable<Project> {
-    const url = `${this.apiUrl}/${project.projectId}`;
-    return this.http.put<Project>(url, project);
+   
+    return this.http.put<Project>(this.apiUrl + "UpdateProject", project);
   }
 
   deleteProject(project: Project): Observable<Project> {
-    const url = `${this.apiUrl}/${project.projectId}`;
-    return this.http.delete<Project>(url);
+    return this.http.post<Project>(this.apiUrl + "DeleteProject", project);
   }
+
+  
 }
