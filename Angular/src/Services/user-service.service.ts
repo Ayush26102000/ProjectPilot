@@ -35,6 +35,8 @@ export class UserServiceService {
     return this.http.get<any>(this.apiUrl + "GetRoles");
   }
 
-  
+  logoutUser(){
+    sessionStorage.clear();
+  }
   
 }

@@ -11,7 +11,7 @@ namespace API.Repositories.Interfaces
         bool UpdateUser(User user);  
         bool DeleteUser(User user);
 
-        bool LoginUser(String Username, String Password);
+        IEnumerable<User> LoginUser(String Username, String Password);
 
         IEnumerable<Role> GetRoles ();
 

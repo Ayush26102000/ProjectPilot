@@ -60,4 +60,7 @@ public class ProjectRepository : IProjectRepository
         var projects = db.Query<Project>("sp_GetProjectMaster", commandType: CommandType.StoredProcedure);
         return projects;
     }
+
+  
+    
 }

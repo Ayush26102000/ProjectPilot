@@ -23,13 +23,13 @@ namespace API.Controllers
             return Ok(projects);
         }
 
-        [HttpGet]
-        [Route("GetAllTeamMembers")]
-        public IActionResult GetAllTeamMembers()
-        {
-            var users = _projectRepository.GetAllTeamMembers();
-            return Ok(users);
-        }
+        //[HttpGet]
+        //[Route("GetAllTeamMembers")]
+        //public IActionResult GetAllTeamMembers()
+        //{
+        //    var users = _projectRepository.GetAllTeamMembers();
+        //    return Ok(users);
+        //}
 
         [HttpPost]
         [Route("AddProject")]

@@ -7,6 +7,8 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Http.HttpResults;
+using System;
 
 public class UserRepository : IUserRepository
 {
@@ -24,14 +26,17 @@ public class UserRepository : IUserRepository
 
     public bool AddUser(User user)
     {
+
         using IDbConnection db = new SqlConnection(connectionString);
         var parameters = new
         {
             username = user.Username,
             email = user.Email,
-            password_hash = user.PasswordHash,
-            role = user.RoleID,
-            action = "insert"
+            PasswordHash = user.PasswordHash,
+            RoleID = user.RoleID,
+            CreatedAt = DateTime.Now,
+            UpdatedAt = DateTime.MaxValue
+
         };
         var affectedRows = db.Execute("sp_InsertUserMaster", parameters, commandType: CommandType.StoredProcedure);
         if (affectedRows < 1)
@@ -45,7 +50,7 @@ public class UserRepository : IUserRepository
     }
     
     
-    public bool LoginUser(String Username , String Password)
+    public IEnumerable<User> LoginUser(String Username , String Password)
     {
        // string decryptedPasswordHash = DecryptPassword(Password);
 
@@ -54,16 +59,15 @@ public class UserRepository : IUserRepository
         {
             username = Username,
             password_hash = Password,
-            action = "loginuser"
         };
-        var users = db.Query<User>("sp_User", parameters, commandType: CommandType.StoredProcedure);
+        var users = db.Query<User>("sp_LoginUser", parameters, commandType: CommandType.StoredProcedure);
         if(users.Count() > 0)
-        {
-            return true;
+            {
+            return users;
         }
         else
-        {
-            return false;
+        {   
+            return null;
         }
     }
 
@@ -111,12 +115,12 @@ public class UserRepository : IUserRepository
         using IDbConnection db = new SqlConnection(connectionString);
         var parameters = new
         {
-            user_id = user.UserID,
             username = user.Username,
             email = user.Email,
-            password_hash = user.PasswordHash,
-            role = user.RoleID,
-            action = "update"
+            PasswordHash = user.PasswordHash,
+            RoleID = user.RoleID,
+            CreatedAt = DateTime.Now,
+            UpdatedAt = DateTime.MaxValue
         };
         var affectedRows = db.Execute("sp_UpdateUserMaster", parameters, commandType: CommandType.StoredProcedure);
         if (affectedRows < 1)

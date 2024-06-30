@@ -44,7 +44,8 @@ export class UserComponent {
       username: ['', Validators.required],
       email: ['', Validators.required],
       passwordHash: ['', Validators.required],
-      role: ['', Validators.required]
+      role: ['', Validators.required],
+  
     });
 
     this.editUserForm = this.fb.group({
@@ -62,8 +63,13 @@ export class UserComponent {
 
   addUser() {
     const userData: User = this.User.value as User;
-    if(userData.roleId == 1) {
-      
+    console.log(userData);
+    if(userData.role == "Admin") {
+      userData.roleID = 1;
+    }else if(userData.role =="Team Member"){
+      userData.roleID = 2;
+    }else{
+      userData.roleID = 3
     }
     this.userService.addUser(userData).subscribe({
       next: () => {
@@ -77,10 +83,26 @@ export class UserComponent {
       }
     });
   }
-
   getUsers() {
     this.userService.GetUsers().subscribe({
-      next: (response) => {
+      next: (response: any[]) => {
+        response = response.map(user => {
+          switch (user.roleID) {
+            case 1:
+              user.role = "Admin";
+              break;
+            case 2:
+              user.role = "Team Member";
+              break;
+            case 3:
+              user.role = "Manager";
+              break;
+            default:
+              user.role = "Unknown"; // or handle as needed
+          }
+          return user;
+        });
+  
         console.log(response);
         this.Users = response;
       },
@@ -89,7 +111,7 @@ export class UserComponent {
       }
     });
   }
-
+  
   getroles(){
     this.userService.GetRoles().subscribe({
       next: (response) => {
@@ -119,7 +141,7 @@ export class UserComponent {
     this.editUserForm.patchValue({
       editUsername: user.username,
       editEmail: user.email,
-      editRole: user.roleId
+      editRole: user.role 
     });
   }
 
@@ -129,7 +151,7 @@ export class UserComponent {
         username: this.editUserForm.get('editUsername')?.value,
         email: this.editUserForm.get('editEmail')?.value,
         passwordHash: this.editUserForm.get('editPasswordHash')?.value,
-        roleId: this.editUserForm.get('editRole')?.value,
+        roleID: this.editUserForm.get('editRole')?.value,
         userId: this.editingUser.userId,
         firstName: '',
         lastName: '',
@@ -137,7 +159,8 @@ export class UserComponent {
         status: false,
         createdAt: new Date(), 
         updatedAt: new Date(), 
-        projectId: null
+        projectId: null,
+        role : ""
       };
 
       this.userService.EditUser(updatedUserData).subscribe({

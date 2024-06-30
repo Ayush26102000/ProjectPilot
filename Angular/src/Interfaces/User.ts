@@ -10,5 +10,6 @@ export interface User {
     createdAt: Date;
     updatedAt: Date;
     projectId: number | null; // Foreign key (nullable)
-    roleId: number; 
+    roleID: number; 
+    role : string
   }

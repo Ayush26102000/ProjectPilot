@@ -6,15 +6,15 @@ import { ManagerDashboardComponent } from '../components/manager-dashboard/manag
 import { TeamMemberDashboardComponent } from '../components/team-member-dashboard/team-member-dashboard.component';
 import { TaskComponent } from '../components/tasks/tasks.component';
 import { ProjectsComponent } from '../components/projects/projects.component';
+import { authGuard } from '../guards/auth.guard'; // Adjust the path as necessary
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/LogInPage', pathMatch: 'full' }, 
-    { path: 'LogInPage', component: LoginComponent }, 
-    { path: 'Users', component: UserComponent } ,
-    { path: 'AdminDashboard', component: AdminDashboardComponent } ,
-    { path: 'ManagerDashboard', component: ManagerDashboardComponent } ,
-    { path: 'TeamMemberDashboard', component: TeamMemberDashboardComponent } ,
-    { path: 'Tasks', component: TaskComponent } ,
-    { path: 'Projects', component: ProjectsComponent } ,
-
-]
+    { path: '', redirectTo: '/LogInPage', pathMatch: 'full' },
+    { path: 'LogInPage', component: LoginComponent },
+    { path: 'Users', component: UserComponent, canActivate: [authGuard] },
+    { path: 'AdminDashboard', component: AdminDashboardComponent, canActivate: [authGuard] },
+    { path: 'ManagerDashboard', component: ManagerDashboardComponent, canActivate: [authGuard] },
+    { path: 'TeamMemberDashboard', component: TeamMemberDashboardComponent, canActivate: [authGuard] },
+    { path: 'Tasks', component: TaskComponent, canActivate: [authGuard] },
+    { path: 'Projects', component: ProjectsComponent, canActivate: [authGuard] },
+];

@@ -5,13 +5,13 @@ namespace API.Repositories.Interfaces
 {
     public interface IProjectRepository
     {
-        void AddProject(Project project);
+        bool AddProject(Project project);
 
         IEnumerable<Project> GetAllProjects();
-        IEnumerable<User> GetAllTeamMembers();
+      
 
-         void UpdateProject(Project project);
+         bool UpdateProject(Project project);
 
-        void DeleteProject(Project project);
+        bool DeleteProject(Project project);
     }
 }

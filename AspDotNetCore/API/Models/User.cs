@@ -14,5 +14,6 @@
         public DateTime UpdatedAt { get; set; }
         public int? ProjectID { get; set; } 
         public int RoleID { get; set; }
+        public string Role { get; set; }
     }
 }

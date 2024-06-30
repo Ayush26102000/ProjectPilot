@@ -11,6 +11,8 @@ import { CardModule } from 'primeng/card';
 import {MessagesModule } from 'primeng/messages'
 import { TableModule } from 'primeng/table';
 import { Message, MessageService } from 'primeng/api';
+import { User } from '../../Interfaces/User';
+
 
 @Component({
   selector: 'app-login',
@@ -35,41 +37,38 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     });
   }
-
+  user:User[] = [];
   ngOnInit(): void {
+    
   }
 
   login() {
     if (this.loginForm.valid) {
+
       const username = this.loginForm.get('username')?.value;
       const password = this.loginForm.get('password')?.value;
 
       this.authService.login(username, password).subscribe({
-        next: (response) => {
-          if(response){
-            if(username == "admin"){
-              this.router.navigate(['/AdminDashboard']);
-            }else if(username == "manager"){
-              this.router.navigate(['/ManagerDashboard']);
-            }else{
-              this.router.navigate(['/TeamMemberDashboard']);
-            }
-         
-          }
-          else{
+        next: (response: any[]) => {
+          if(response != null){
+            
+            response.forEach(user => {
+              sessionStorage.setItem('username', user.username);
+              if(user.roleID == 1) {
+                this.router.navigate(['/AdminDashboard']);
+              } else if(user.roleID == 2) {
+                this.router.navigate(['/ManagerDashboard']);
+              } else {
+                this.router.navigate(['/TeamMemberDashboard']);
+              }
+            });
+          }else{
             this.messageService.add({ severity: 'error', summary: 'OMG ! Check your username password again' });
           }
- 
+         
         },
         error: () => {
-          this.messageService.add({ severity: 'error', summary: 'Error while  Loging in' });
-          if(username == "admin"){
-            this.router.navigate(['/AdminDashboard']);
-          }else if(username == "manager"){
-            this.router.navigate(['/ManagerDashboard']);
-          }else{
-            this.router.navigate(['/TeamMemberDashboard']);
-          }
+          this.messageService.add({ severity: 'error', summary: 'OMG ! Check your username password again' });
         }
     });
     }
